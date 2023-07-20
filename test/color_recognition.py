@@ -20,6 +20,7 @@ color = ''
 
 while True:
     ret, frame = cap.read()
+    ret, eye2 = cap.read()
 
     #cv2.imshow("Eye of the robot", frame)
     
@@ -60,6 +61,7 @@ while True:
     cv2.putText(frame, color, (10,50), 0, 1, (0,255,0),2)
 
     cv2.imshow("Eye of the robot", frame)
+    cv2.imshow("Eye of the robot2", eye2)
 
     print(color)
 

@@ -26,7 +26,15 @@ while True:
     if key == 27:
         break
 
-    gray_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY) # Converting to gray frame
+
+    #capturar cor apenas dentro de um retangulo     
+    height,width,_ = frame.shape
+    offset = 100
+    campo = frame[offset:height-offset,offset:width-offset]
+    #show rec 
+    cv2.rectangle(frame,(offset,offset),(width-offset,height-offset),(255,0,0),3)
+
+    gray_frame = cv2.cvtColor(campo, cv2.COLOR_BGR2GRAY) # Converting to gray frame
 
     # Setting threshold value to get new frame (In simpler terms: this function checks every pixel, and depending on how
     # dark the pixel is, the threshold value will convert the pixel to either black or white (0 or 1)).
@@ -48,7 +56,7 @@ while True:
         approx = cv2.approxPolyDP(contour, epsilon, True)
 
         # Drawing the outer-edges onto the frame
-        cv2.drawContours(frame, contour, 0, (0, 0, 0), 4)
+        cv2.drawContours(campo, contour, 0, (0, 0, 0), 4)
 
         # Retrieving coordinates of the contour so that we can put text over the shape.
         x, y, w, h= cv2.boundingRect(approx)
@@ -78,6 +86,10 @@ while True:
             format = 'Circle'
         
         # Displaying the frame with the detected shapes onto the screen
+    cv2.putText(frame, format, (10,50), 0, 1, (0,255,0),2)    
+    cv2.putText(frame, str(x_mid), (10,100), 0, 1, (0,0,255),2) 
+    cv2.putText(frame, str(y_mid), (10,150), 0, 1, (255,0,0),2) 
     cv2.imshow("shapes_detected", frame)
-    print(format)
+    
+    
         

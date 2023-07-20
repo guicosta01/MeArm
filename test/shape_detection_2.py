@@ -42,7 +42,7 @@ def drawObject(x,y,frame):
 
     x = int(x)
     y = int(y)
-    cv2.circle(frame,(x,y),20,(0,255,0),2);
+    cv2.circle(frame,(x,y),20,(0,255,0),2)
     if(y-25>0):
         cv2.line(frame,(x,y),(x,y-25),\
                  (0,255,0),2)
@@ -90,7 +90,7 @@ def trackFilteredObject(x, y, threshold, cameraFeed):
     
     temp = threshold
 
-    (_,contours,hierarchy) = cv2.findContours(temp,cv2.RETR_CCOMP,cv2.CHAIN_APPROX_SIMPLE)
+    contours,hierarchy = cv2.findContours(temp,cv2.RETR_CCOMP,cv2.CHAIN_APPROX_SIMPLE)
     refArea = 0
     objectFound = False
     try:
@@ -113,10 +113,10 @@ def trackFilteredObject(x, y, threshold, cameraFeed):
                     testando = hierarchy
                         
             if(objectFound == True):
-                cv2.putText(cameraFeed,"Tracking Object",(0,50),2,1,(0,255,0),2);
+                cv2.putText(cameraFeed,"Tracking Object",(0,50),2,1,(0,255,0),2)
                 drawObject(x,y,cameraFeed)
         else:
-            cv2.putText(cameraFeed,"TOO MUCH NOISE! ADJUST FILTER",(0,50),1,2,(0,0,255),2);
+            cv2.putText(cameraFeed,"TOO MUCH NOISE! ADJUST FILTER",(0,50),1,2,(0,0,255),2)
 
     except:
         pass
@@ -128,9 +128,9 @@ def main():
     x = 0
     y = 0
 
-    createTrackbars();
+    createTrackbars()
 
-    capture = cv2.VideoCapture(1)
+    capture = cv2.VideoCapture(0)
 
     capture.set(cv2.CAP_PROP_FRAME_WIDTH,FRAME_WIDTH)
     capture.set(cv2.CAP_PROP_FRAME_HEIGHT,FRAME_HEIGHT)
@@ -150,7 +150,7 @@ def main():
             threshold = morphOps(threshold)
 
         if(trackObjects):
-            trackFilteredObject(x,y,threshold,cameraFeed);
+            trackFilteredObject(x,y,threshold,cameraFeed)
 
         cv2.imshow(windowName2,threshold)
         cv2.imshow(windowName,cameraFeed)
