@@ -161,4 +161,5 @@ cython_debug/
 
 remenbers.txt
 
+*.mp4
 img/
